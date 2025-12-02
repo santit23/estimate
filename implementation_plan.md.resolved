@@ -1,0 +1,57 @@
+# Implementation Plan - Aluminium Vendor SaaS Platform
+
+## Goal Description
+Transform the existing single-user Python/Streamlit estimation tool into a multi-tenant SaaS platform. This will allow multiple vendors to sign up, manage their own material rates, create estimates for their customers, and generate professional reports.
+
+## User Review Required
+> [!IMPORTANT]
+> **Tech Stack Decision**: I am proposing **Next.js (React)** for the frontend to provide a premium, responsive SaaS experience, replacing Streamlit. Streamlit is great for data apps but less suitable for a customer-facing SaaS with complex state and custom UI requirements.
+> **Database**: We will start with **SQLite** for local development ease but structure it using **SQLAlchemy** so it can be easily switched to **PostgreSQL** for production.
+
+## Proposed Changes
+
+### Backend Architecture (FastAPI)
+Refactor the existing [main.py](file:///d:/Self-learn/Baba_estimate/estimate/main.py) into a structured application.
+
+#### [NEW] `app/` Directory Structure
+- `app/main.py`: Application entry point.
+- `app/core/`: Config, security (JWT), database connection.
+- `app/models/`: SQLAlchemy database models.
+- `app/schemas/`: Pydantic models for API request/response.
+- `app/api/`: Route handlers (Auth, Users, Estimates, Materials).
+- `app/services/`: Business logic (Calculation engine refactored from [estimator.py](file:///d:/Self-learn/Baba_estimate/estimate/estimator.py)).
+
+### Database Schema
+We need to persist data that was previously hardcoded or transient.
+
+- **User**: Authentication details (email, password hash).
+- **VendorProfile**: Business details (Name, Logo, Address).
+- **MaterialRate**: Vendor-specific rates. *Crucial: Each vendor has their own set of rates.*
+- **Customer**: Client details for estimates.
+- **Estimate**: Header info (Customer, Date, Grand Total).
+- **EstimateItem**: Line items (Design, Dimensions, Quantity, Cost).
+
+### Core Logic Refactoring
+- **[estimator.py](file:///d:/Self-learn/Baba_estimate/estimate/estimator.py)**: Modify [get_rates](file:///d:/Self-learn/Baba_estimate/estimate/estimator.py#33-38) to fetch from the database based on the `current_user` (Vendor) instead of the global `MATERIAL_RATES` dictionary.
+- **[config.py](file:///d:/Self-learn/Baba_estimate/estimate/config.py)**: Remove hardcoded rates; keep them only as a "default seed" for new vendors.
+
+### Frontend (Next.js)
+Create a new `frontend/` directory.
+
+- **Auth Pages**: Login, Register.
+- **Dashboard**: Overview of recent estimates, total revenue.
+- **Settings**: Interface to update Material Rates (The "Config" UI).
+- **Estimate Builder**: Interactive form to add items (similar to the Streamlit form but more dynamic).
+- **PDF Generation**: Move PDF generation to the backend or use a frontend library like `@react-pdf/renderer`.
+
+## Verification Plan
+
+### Automated Tests
+- **Backend Tests**: `pytest` for API endpoints (Auth, CRUD) and Calculation logic.
+- **Integration Tests**: Verify that changing a material rate in the DB updates the estimate calculation.
+
+### Manual Verification
+- Register a new user.
+- Update a specific material rate (e.g., "Glass" price).
+- Create an estimate and verify the calculation uses the user's specific rate.
+- Generate a PDF and verify it contains the correct vendor details.

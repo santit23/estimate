@@ -1,0 +1,81 @@
+# Aluminium Vendor SaaS Platform - Walkthrough
+
+## Overview
+This platform allows aluminium vendors to manage their material rates, create estimates for customers, and track their projects. It replaces the previous single-user script with a multi-tenant SaaS architecture.
+
+## Prerequisites
+- Python 3.8+
+- Node.js 18+
+- Git
+
+## Setup Instructions
+
+### 1. Backend Setup
+The backend is built with FastAPI and uses SQLite (dev) / PostgreSQL (prod).
+
+1. Navigate to the project root:
+   ```bash
+   cd d:/Self-learn/Baba_estimate/estimate
+   ```
+2. Create a virtual environment (optional but recommended):
+   ```bash
+   python -m venv .venv
+   .venv\Scripts\activate
+   ```
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. Start the backend server:
+   ```bash
+   uvicorn app.main:app --reload
+   ```
+   The API will be available at `http://localhost:8000`.
+   API Documentation: `http://localhost:8000/docs`.
+
+### 2. Frontend Setup
+The frontend is built with Next.js and Tailwind CSS.
+
+1. Navigate to the frontend directory:
+   ```bash
+   cd frontend
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
+   The application will be available at `http://localhost:3000`.
+
+## User Guide
+
+### Registration & Login
+1. Open `http://localhost:3000`.
+2. Click "Register" to create a new vendor account.
+3. Enter your business details (Name, Address, Phone).
+   *Note: Default material rates are automatically seeded for new vendors.*
+4. Login with your email and password.
+
+### Dashboard
+- View a list of all your recent estimates.
+- See the total amount and area for each project.
+
+### Creating an Estimate
+1. Click "New Estimate" on the dashboard.
+2. Enter Customer Details.
+3. Add Items:
+   - Select Design (2 Panel / 3 Panel).
+   - Select Series (90mm / 78mm).
+   - Select Quality (Mount / Rohit).
+   - Enter Width and Height.
+   - Click "Add Item".
+4. Review the items list.
+5. Click "Generate Estimate" to save.
+
+## Architecture Notes
+- **Database**: `sql_app.db` (SQLite) is created in the root directory.
+- **Auth**: JWT-based authentication. Tokens are stored in LocalStorage.
+- **Rates**: Each vendor has their own copy of material rates in the database, allowing for future customization without affecting other users.
