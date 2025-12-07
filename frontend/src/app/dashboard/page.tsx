@@ -65,7 +65,7 @@ export default function Dashboard() {
                                                         {estimate.customer_name}
                                                     </p>
                                                 </div>
-                                                <div className="ml-2 flex-shrink-0 flex">
+                                                <div className="ml-2 shrink-0 flex">
                                                     <p className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                                                         ₹{estimate.total_amount.toFixed(2)}
                                                     </p>
@@ -95,4 +95,6 @@ export default function Dashboard() {
                         </ul>
                     </div>
                 </div>
- 
+ </main>
+ </div>
+    )}
