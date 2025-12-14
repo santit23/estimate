@@ -28,11 +28,11 @@ WINDOW_FORMULAS = {
         'roller':       lambda l, h: 4,         # 2 per panel
         'lock':         lambda l, h: 1,
         'silicon':      lambda l, h: 1,
-        'screw':        lambda l, h: 1,         # Fixed cost multiplier
+        'screw':        lambda l, h: l*h,    # Changeable according to the design + screw Grip     # Fixed cost multiplier
         'labour':       lambda l, h: l * h,
         # --- Jali Configuration ---
-        'jali':       lambda l, h: (0.5*l) * h,  
-        'jali_gasket':  lambda l, h: (0.5*l) + (h*2),
+        'jali':       lambda l, h: l + h*2,  
+        'jali_gasket':  lambda l, h: l + h*2,
         'jali_angle':   lambda l, h: 4,
         'jali_handle':  lambda l, h: 1,
         'jali_roller':  lambda l, h: 2
@@ -46,20 +46,20 @@ WINDOW_FORMULAS = {
         
         'topsht':       lambda l, h: l,
         'bottomsht':    lambda l, h: l,
-        'sidesht':      lambda l, h: h * 3,     # 3 Panels
+        'sidesht':      lambda l, h: h * 2,     # 3 Panels
         'interlocksht': lambda l, h: h * 4,     # 2 meeting points
         
         'glass':        lambda l, h: l * h,
-        'gasket':       lambda l, h: (l*6) + (h*12),
-        'red_brush':    lambda l, h: l * 3,
-        'brush':        lambda l, h: (l*2) + (h*7),
+        'gasket':       lambda l, h: (l*4) + (h*12),
+        'red_brush':    lambda l, h: l * 2,
+        'brush':        lambda l, h: (l*2) + (h*4),
         
         'guide':        lambda l, h: 4*3,
-        'roller':       lambda l, h: 6,
+        'roller':       lambda l, h: 4,
         'lock':         lambda l, h: 1,
         'silicon':      lambda l, h: 1.5,
-        'screw':        lambda l, h: 1,
-        # 'labour':       lambda l, h: l * h,
+        'screw':        lambda l, h: l*h,
+        'labour':       lambda l, h: l * h,
         #  --- Jali Configuration ---
         'jali':       lambda l, h: (1/3)*l * h,
         'jali_gasket':  lambda l, h: (1/3)*2*l + (h*2),
@@ -81,21 +81,21 @@ WINDOW_FORMULAS = {
         
         'glass':        lambda l, h: l * h,
         'gasket':       lambda l, h: (l*4) + (h*16),
-        'red_brush':    lambda l, h: l * 4,
-        'brush':        lambda l, h: (l*2) + (h*9),
+        'red_brush':    lambda l, h: l * 2,
+        'brush':        lambda l, h: (l*2) + (h*6),
         
         'guide':        lambda l, h: 16,
         'roller':       lambda l, h: 8,
-        'lock':         lambda l, h: 1,
+        'lock':         lambda l, h: 2,
         'silicon':      lambda l, h: 2,
-        'screw':        lambda l, h: 1,
+        'screw':        lambda l, h: l*h,
 
         # --- Jali Configuration ---
         'jali':       lambda l, h: (1/3)*l * h,
-        'jali_gasket':  lambda l, h: l+h*4,
+        'jali_gasket':  lambda l, h: l+(h*4),
         'jali_angle':   lambda l, h: 8,
-        'jali_handle':  lambda l, h: 1,
-        'jali_roller':  lambda l, h: 8
+        'jali_handle':  lambda l, h: 2,
+        'jali_roller':  lambda l, h: 4
 },
     "2_pnl_topfix": {
 
@@ -112,21 +112,21 @@ WINDOW_FORMULAS = {
         '13d':         lambda l, h: l,
         '13':          lambda l, h: fixht * 2,
         '18':          lambda l, h: fixht,
-        'clip':         lambda l, h: l*2 + fixht*4,
+        'clip':         lambda l, h: (l*2) + (fixht*4),
         
         'glass':        lambda l, h: l * h,
         'gasket':       lambda l, h: (l*8) + (h*8),
-        'red_brush':    lambda l, h: l * 4 * 3,
-        'brush':        lambda l, h: (l*2) + (h*3),
+        'red_brush':    lambda l, h: l * 2,
+        'brush':        lambda l, h: (l*2) + (sldht*4),
         
         'guide':        lambda l, h: 8,
         'roller':       lambda l, h: 4,
-        'lock':         lambda l, h: 2,
+        'lock':         lambda l, h: 1,
         'silicon':      lambda l, h: 1,
-        'screw':        lambda l, h: 1,
+        'screw':        lambda l, h: l*h,
         'labour':       lambda l, h: l * h,
         # --- Jali Configuration ---
-        'jali':       lambda l, h: l * sldht * 0.5,  
+        'jali':       lambda l, h: l *( sldht * 0.5),  
         'jali_gasket':  lambda l, h: l + sldht*2,
         'jali_angle':   lambda l, h: 4,
         'jali_handle':  lambda l, h: 1,
@@ -152,18 +152,18 @@ WINDOW_FORMULAS = {
         
         'glass':        lambda l, h: l * h,
         'gasket':       lambda l, h: (l*8) + (h*12),
-        'red_brush':    lambda l, h: l * 4 * 3,
-        'brush':        lambda l, h: sldht*8,
+        'red_brush':    lambda l, h: l * 2,
+        'brush':        lambda l, h: (l*2) + sldht*4,
         
         'guide':        lambda l, h: 12,
         'roller':       lambda l, h: 4,
-        'lock':         lambda l, h: 2,
+        'lock':         lambda l, h: 1,
         'silicon':      lambda l, h: 1,
-        'screw':        lambda l, h: 1,
+        'screw':        lambda l, h: l*h,
         'labour':       lambda l, h: l * h,
         # --- Jali Configuration ---
         'jali':       lambda l, h: l*sldht*0.33,  
-        'jali_gasket':  lambda l, h: l * 0.66 + sldht*2,
+        'jali_gasket':  lambda l, h: (l * 0.66) + (sldht*2),
         'jali_angle':   lambda l, h: 4,
         'jali_handle':  lambda l, h: 1,
         'jali_roller':  lambda l, h: 2,
@@ -184,24 +184,25 @@ WINDOW_FORMULAS = {
         '13d':         lambda l, h: l,
         '13':          lambda l, h: fixht * 2,
         '18':          lambda l, h: fixht * 3,
-        'clip':         lambda l, h: l*2 + fixht*8,
+        'clip':         lambda l, h: (l*2) + (fixht*8),
+        'jointsht':     lambda l, h: sldht,
         
         'glass':        lambda l, h: l * h,
         'gasket':       lambda l, h: (l*8) + (h*16),
-        'red_brush':    lambda l, h: l * 4 * 3,
-        'brush':        lambda l, h: sldht*10,
+        'red_brush':    lambda l, h: l * 2,
+        'brush':        lambda l, h: (l*2) + sldht*6,
         
         'guide':        lambda l, h: 16,
         'roller':       lambda l, h: 8,
-        'lock':         lambda l, h: 3,
-        'silicon':      lambda l, h: 1,
-        'screw':        lambda l, h: 1,
+        'lock':         lambda l, h: 2,
+        'silicon':      lambda l, h: 3,
+        'screw':        lambda l, h: l*h,
         'labour':       lambda l, h: l * h,
         # --- Jali Configuration ---
         'jali':       lambda l, h: l*sldht*0.5,  
-        'jali_gasket':  lambda l, h: l  + sldht*4,
-        'jali_angle':   lambda l, h: 4,
-        'jali_handle':  lambda l, h: 1,
+        'jali_gasket':  lambda l, h: l  + (sldht*4),
+        'jali_angle':   lambda l, h: 8,
+        'jali_handle':  lambda l, h: 2,
         'jali_roller':  lambda l, h: 4,
           
     },
@@ -220,21 +221,21 @@ WINDOW_FORMULAS = {
         '13d':         lambda l, h: l * 2,
         '13':          lambda l, h: fixtbmht * 2,
         '18':          lambda l, h: fixtbmht,
-        'clip':         lambda l, h: l*4 + fixtbmht*4,
+        'clip':         lambda l, h: (l*4) + (fixtbmht*4),
         
         'glass':        lambda l, h: l * h,
         'gasket':       lambda l, h: (l*12) + (h*8),
-        'red_brush':    lambda l, h: l * 4 ,
-        'brush':        lambda l, h: sldtbmht*6,
+        'red_brush':    lambda l, h: l * 2 ,
+        'brush':        lambda l, h: (l*2) + (sldtbmht*4),
         
         'guide':        lambda l, h: 8,
         'roller':       lambda l, h: 4,
-        'lock':         lambda l, h: 2,
-        'silicon':      lambda l, h: 1,
-        'screw':        lambda l, h: 1,
+        'lock':         lambda l, h: 1,
+        'silicon':      lambda l, h: 1.5,
+        'screw':        lambda l, h: l*h,
         'labour':       lambda l, h: l * h,
         # --- Jali Configuration ---
-        'jali':       lambda l, h: l+4*sldtbmht,  
+        'jali':       lambda l, h: 0.5*l*sldtbmht,  
         'jali_gasket':  lambda l, h: l  + sldtbmht*2,
         'jali_angle':   lambda l, h: 4,
         'jali_handle':  lambda l, h: 1,
@@ -256,22 +257,22 @@ WINDOW_FORMULAS = {
         '13d':         lambda l, h: l * 2,
         '13':          lambda l, h: fixtbmht * 2,
         '18':          lambda l, h: fixtbmht*2,
-        'clip':         lambda l, h: l*4 + fixtbmht*6,
+        'clip':         lambda l, h: (l*4) + (fixtbmht*6),
         
         'glass':        lambda l, h: l * h,
         'gasket':       lambda l, h: (l*12) + (h*12),
-        'red_brush':    lambda l, h: l * 4 ,
-        'brush':        lambda l, h: sldtbmht*8,
+        'red_brush':    lambda l, h: l * 2 ,
+        'brush':        lambda l, h: (l*2) + (sldtbmht*4),
         
         'guide':        lambda l, h: 12,
         'roller':       lambda l, h: 4,
-        'lock':         lambda l, h: 2,
-        'silicon':      lambda l, h: 1,
-        'screw':        lambda l, h: 1,
+        'lock':         lambda l, h: 1,
+        'silicon':      lambda l, h: 2,
+        'screw':        lambda l, h: l*h,
         'labour':       lambda l, h: l * h,
         # --- Jali Configuration ---
-        'jali':       lambda l, h: l*0.67+2*sldtbmht,  
-        'jali_gasket':  lambda l, h: l*0.66  + sldtbmht*2,
+        'jali':       lambda l, h: (l*0.33)+sldtbmht,  
+        'jali_gasket':  lambda l, h: (l*0.66)  + (sldtbmht*2),
         'jali_angle':   lambda l, h: 4,
         'jali_handle':  lambda l, h: 1,
         'jali_roller':  lambda l, h: 2,
@@ -293,23 +294,24 @@ WINDOW_FORMULAS = {
         '13':          lambda l, h: fixtbmht * 2,
         '18':          lambda l, h: fixtbmht*3,
         'clip':         lambda l, h: l*4 + fixtbmht*8,
+        'jointsht':     lambda l, h: sldtbmht,
         
         'glass':        lambda l, h: l * h,
         'gasket':       lambda l, h: (l*12) + (h*16),
-        'red_brush':    lambda l, h: l * 4 ,
-        'brush':        lambda l, h: sldtbmht*10,
+        'red_brush':    lambda l, h: l * 2 ,
+        'brush':        lambda l, h: (l*2) + (sldtbmht*6),
         
         'guide':        lambda l, h: 16,
         'roller':       lambda l, h: 8,
-        'lock':         lambda l, h: 3,
-        'silicon':      lambda l, h: 1,
-        'screw':        lambda l, h: 1,
+        'lock':         lambda l, h: 2,
+        'silicon':      lambda l, h: 2,
+        'screw':        lambda l, h: l*h,
         'labour':       lambda l, h: l * h,
         # --- Jali Configuration ---
-        'jali':       lambda l, h: l+4*sldtbmht,  
+        'jali':       lambda l, h: l+ (4*sldtbmht),  
         'jali_gasket':  lambda l, h: l  + sldtbmht*4,
         'jali_angle':   lambda l, h: 8,
-        'jali_handle':  lambda l, h: 1,
+        'jali_handle':  lambda l, h: 2,
         'jali_roller':  lambda l, h: 4,
           
     }
