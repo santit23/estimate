@@ -10,10 +10,7 @@ Base.metadata.create_all(bind=engine)
 app = FastAPI(title=settings.PROJECT_NAME, openapi_url=f"{settings.API_V1_STR}/openapi.json")
 
 # CORS
-origins = [
-    "http://localhost",
-    "http://localhost:3000",
-]
+origins = ["*"]
 
 app.add_middleware(
     CORSMiddleware,
@@ -25,6 +22,8 @@ app.add_middleware(
 
 app.include_router(auth.router, prefix="/auth", tags=["auth"])
 app.include_router(estimates.router, prefix="/estimates", tags=["estimates"])
+from app.api import rates
+app.include_router(rates.router, prefix="/rates", tags=["rates"])
 
 @app.get("/")
 def read_root():

@@ -1,39 +1,34 @@
 from sqlalchemy.orm import Session
-from app.models.models import MaterialRate
-from estimator import get_estimator_by_design
+from app.services import core_engine_service
 
-def get_user_rates(user_id: int, db: Session):
+def calculate_estimate_for_item(item_data, user_id: int, db: Session, variable_inputs: dict = None):
     """
-    Fetches material rates for a specific user and reconstructs the nested dictionary
-    format required by the legacy estimator logic.
+    Calculate estimate using the core-engine service.
+    Acts as a bridge between the API and the core-engine.
     """
-    rates = db.query(MaterialRate).filter(MaterialRate.user_id == user_id).all()
-    
-    # Reconstruct nested dict: rates_config[series][quality][material]
-    rates_config = {}
-    
-    for r in rates:
-        if r.series not in rates_config:
-            rates_config[r.series] = {}
-        if r.quality not in rates_config[r.series]:
-            rates_config[r.series][r.quality] = {}
-        
-        rates_config[r.series][r.quality][r.material_name] = r.rate
-        
-    return rates_config
-
-def calculate_estimate_for_item(item_data, user_id: int, db: Session):
-    rates_config = get_user_rates(user_id, db)
-    
-    # Check if series/quality exists in user rates, if not fallback or error
-    # For now, we assume the user has rates for what they select
-    
-    estimator = get_estimator_by_design(item_data.design, rates_config)
-    result = estimator.estimate(
-        item_data.series, 
-        item_data.quality, 
-        item_data.width, 
-        item_data.height, 
-        item_data.quantity
+    # Call the new core engine
+    result = core_engine_service.calculate_estimate_with_core_engine(
+        product_type="window", # Defaulting to window for now
+        design=item_data.design,
+        series=item_data.series,
+        quality=item_data.quality,
+        width=item_data.width,
+        height=item_data.height,
+        quantity=item_data.quantity,
+        user_id=user_id,
+        db=db,
+        color=item_data.color,
+        variable_inputs=variable_inputs
     )
-    return result
+    
+    # Map core-engine result to expected format for API
+    # Core engine returns { "financials": { "total_cost": ... }, ... }
+    # API expects { "total_cost": ... }
+    
+    return {
+        "total": result['financials']['5_total_cost'], # For compatibility with update_estimate
+        "total_cost": result['financials']['5_total_cost'], # For compatibility with create_estimate
+        "breakdown": result['breakdown'],
+        "metadata": result['metadata']
+    }
+

@@ -12,7 +12,13 @@ MATERIAL_RATES = {
             'bottomsht': 6,
             'sidesht': 8,
             'interlocksht': 8,
+            'intsht': 8, # Interlock Shutter synonym or variant
             'jali': 14,
+            '11b': 133.25, # Adding missing profiles from core-engine
+            '13d': 74.75,
+            '13': 81.25,
+            '18': 190.25,
+            'clip': 26.5,
             'glass': 19,
             'gasket': 13,
             'red_brush': 8,

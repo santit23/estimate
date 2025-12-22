@@ -14,6 +14,8 @@ class Estimate(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     total_amount = Column(Float)
     total_area = Column(Float)
+    transport_cost = Column(Float, default=0.0)
+    profit_margin = Column(Float, default=0.0)
     
     user = relationship("User", back_populates="estimates")
     items = relationship("EstimateItem", back_populates="estimate")

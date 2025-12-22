@@ -11,6 +11,10 @@ class MaterialRate(Base):
     series = Column(String)  # e.g., "90mm", "78mm"
     quality = Column(String)  # e.g., "mount", "rohit"
     material_name = Column(String)  # e.g., "topfr", "glass"
+    color = Column(String, default="mill")  # e.g., "mill", "black", "wood"
+    unit = Column(String, nullable=True)     # e.g., "20ft", "nos", "kg"
+    category = Column(String, default="other") # e.g., "profile", "hardware"
     rate = Column(Float)
     
     user = relationship("User", back_populates="material_rates")
+
